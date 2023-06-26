@@ -13,6 +13,8 @@ return new class extends Migration {
             $table->increments('id');
             $table->integer('id_apart');
             $table->unsignedInteger('id_morador');
+            $table->timestamps();
+
 
             $table->foreign('id_apart')->references('num_ap')->on('apartamento');
             $table->foreign('id_morador')->references('condx_id')->on('morador');

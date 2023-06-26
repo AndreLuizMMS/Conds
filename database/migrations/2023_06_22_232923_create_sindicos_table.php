@@ -10,8 +10,9 @@ return new class extends Migration {
      */
     public function up(): void {
         Schema::create('sindicos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unique();
             $table->string('nome');
+            $table->timestamps();
         });
     }
 

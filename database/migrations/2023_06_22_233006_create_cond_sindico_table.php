@@ -11,16 +11,15 @@ return new class extends Migration {
      */
     public function up(): void {
         Schema::create('cond_sindico', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('id_condomino');
+            $table->increments('id')->unique();
+            $table->unsignedInteger('id_condominio');
             $table->unsignedInteger('id_sindico');
             $table->string('turno', 3);
 
-            $table->foreign('id_condomino')->references('id')->on('condominios');
+            $table->foreign('id_condominio')->references('id')->on('condominios');
             $table->foreign('id_sindico')->references('id')->on('sindicos');
+            $table->timestamps();
         });
-
-        DB::statement("ALTER TABLE cond_sindico ADD CONSTRAINT turno_trab CHECK('turno' IN ('mat', 'ves', 'not') )");
     }
 
     /**

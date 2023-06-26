@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +17,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::view('/', 'pages.login');
-Route::view('/register', 'pages.register');
+
+Route::view('/', 'pages.home');
+
+Route::middleware('guest')->group(function () {
+    Route::view('/login', 'pages.login')->name('login');
+    Route::view('/register', 'pages.register');
+});
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/login-form', 'login');
+    Route::post('/register-form', 'register');
+    Route::post('/logout', 'logout');
+});
+
+Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function () {
+
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/home', 'home');
+
+        Route::prefix('condominios')->group(function () {
+            Route::get('/', 'listCondominios')->name('listCondominios');
+
+            Route::post('/add', 'addCondominio');
+            Route::delete('/delete/{id}', 'deleteCondominio');
+            Route::get('/edit/{id}/', 'editCondominio');
+            Route::get('/edit-name/{id}/', 'editNomeCondominio');
+
+            Route::post('/add-sindico/{id}/', 'addSindico');
+        });
+    });
+});

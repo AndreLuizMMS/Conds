@@ -12,9 +12,10 @@ return new class extends Migration {
         Schema::create('proprietario', function (Blueprint $table) {
             $table->unsignedInteger('condx_id');
             $table->integer('apartamento');
+            $table->timestamps();
 
             $table->foreign('condx_id')->references('id')->on('condxminos');
-            
+
             // is set on create_set_keys
             // $table->foreign('apartamento')->references('id_apart')->on('prop_apartamento');
         });

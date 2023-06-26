@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->unsignedInteger('condominio');
             $table->unsignedInteger('id_morador')->nullable();
             $table->unsignedInteger('id_proprietario')->nullable();
+            $table->timestamps();
+
 
             $table->foreign('condominio')->references('id')->on('condominios');
 
