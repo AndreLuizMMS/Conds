@@ -13,7 +13,7 @@
     <a href="/admin/condominios">
       Condominios
     </a>
-    <a href="#">
+    <a href="/admin/sindicos">
       Síndicos
     </a>
   </div>

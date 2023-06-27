@@ -19,6 +19,10 @@ class AdminController extends Controller {
         return view('Admin.condominios', ['conds' => $conds, 'user' => auth()->user()]);
     }
 
+    function listSindicos() {
+        $sindicos = Sindico::all();
+        return view('Admin.sindicos', ['sindicos' => $sindicos, 'user' => auth()->user()]);
+    }
 
     // condominio CRUD
     function addCondominio(Request $req) {
@@ -79,6 +83,7 @@ class AdminController extends Controller {
             'nome' => 'required',
             'turno' => 'required'
         ]);
+        $form['nome'] = trim($form['nome']);
 
         // sindicos daquele condominio
         $sindicos = Sindico::select('sindicos.nome', 'cond_sindico.turno', 'sindicos.id')
@@ -94,15 +99,16 @@ class AdminController extends Controller {
                 }
             }
         }
-
         foreach ($sindicos as $sindico) {
             if ($form['turno'] == $sindico->turno) {
                 return back()->withErrors(['nome' => 'Turno ou Sindico ocupado']);
             }
         }
 
-        if ($currentSindico) {
+        $formSindico = Sindico::where('nome', $form['nome']);
+        if (!$formSindico->exists()) {
             $newSindico = Sindico::create(['nome' => $form['nome']]);
+
             cond_sindico::create([
                 'id_sindico' => $newSindico->id,
                 'id_condominio' => $id,
@@ -120,7 +126,7 @@ class AdminController extends Controller {
         return back();
     }
 
-    function deleteSindico($id) {
+    function deleteSindicoAtivo($id) {
         //sindicos daquele condominio
         $sindicos = Sindico::select('sindicos.nome', 'cond_sindico.turno', 'sindicos.id')
             ->from('sindicos')
@@ -137,5 +143,48 @@ class AdminController extends Controller {
 
             return back()->withErrors(['nome' => 'Sindico excluído']);
         }
+    }
+
+    // CRUD Sindicos ------------------------------------
+
+    function editSindico($id) {
+        $sindico = Sindico::find($id);
+
+        $turnos = Sindico::select('sindicos.id', 'condominios.nome', 'cond_sindico.turno')
+            ->from('sindicos')
+            ->join('cond_sindico', 'cond_sindico.id_sindico', '=', 'sindicos.id')
+            ->join('condominios', 'cond_sindico.id_condominio', '=', 'condominios.id')
+            ->get();
+
+
+        return view(
+            'Admin.edit-sindico',
+            ['user' => auth()->user(), 'sindico' => $sindico, 'turnos' => $turnos]
+        );
+    }
+
+
+    function editNomeSindico($id, Request $req) {
+        $form = $req->validate(['novoNome' => 'required']);
+
+        $sindico = Sindico::find($id);
+        $sindico->nome =  $form['novoNome'];
+        $sindico->save();
+
+        return back();
+    }
+
+    function deleteSindico($id) {
+        $sindico = Sindico::find($id);
+
+        if ($sindico->exists()) {
+            $turnos = cond_sindico::where('id_sindico', $id)->get();
+            foreach ($turnos as $turno) {
+                $turno->delete();
+            }
+            $sindico->delete();
+        }
+
+        return back();
     }
 }

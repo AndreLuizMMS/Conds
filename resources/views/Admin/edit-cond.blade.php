@@ -8,6 +8,10 @@
   <h1>{{ $cond->nome }}</h1>
   <button id="changeNameBtn">mudar nome</button>
 
+  <br>
+  <br>
+  <br>
+
   <div id="editNameForm" style="display: none;">
     <form action="/admin/condominios/edit-name/{{ $cond->id }}">
       <input type="text" name="nome">

@@ -22,18 +22,18 @@ class DatabaseSeeder extends Seeder {
             'password' => bcrypt('asdasd')
         ]);
 
-        // $cond = Condominio::create([
-        //     'nome' => 'San Regis'
-        // ]);
+        $cond = Condominio::create([
+            'nome' => 'San Regis'
+        ]);
 
-        // $sind = Sindico::create([
-        //     'nome' => 'André'
-        // ]);
+        $sind = Sindico::create([
+            'nome' => 'André'
+        ]);
 
-        // cond_sindico::create([
-        //     'id_sindico' => $sind->id,
-        //     'id_condominio' => $cond->id,
-        //     'turno' => 'mat'
-        // ]);
+        cond_sindico::create([
+            'id_sindico' => $sind->id,
+            'id_condominio' => $cond->id,
+            'turno' => 'mat'
+        ]);
     }
 }
