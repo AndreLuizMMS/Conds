@@ -1,5 +1,6 @@
-@props(['cond'])
+@props(['cond', 'sindicos', 'user'])
 <x-layout>
+  <x-sidebar :user="$user" />
   <a href="/admin/condominios">
     back
   </a>
@@ -21,8 +22,10 @@
     @csrf
     <label for="nome">Adicionar Sindico</label>
     <input type="text" name="nome">
+    @error('nome')
+      <x-error-msg :message="$message" />
+    @enderror
     <select name="turno" value="turno">
-      <option value="0"></option>
       <option value="mat">Mat</option>
       <option value="ves">Ves</option>
       <option value="not">Not</option>
@@ -31,6 +34,36 @@
       Salvar
     </button>
   </form>
+
+  <h1>Síndicos atuais</h1>
+
+
+  <div class="sindicos-at">
+    <div class="table-header">
+      <span>Nome</span>
+      <span>Turno</span>
+    </div>
+    <div class="sindicos-info">
+      @foreach ($sindicos as $sindico)
+        <div class="info">
+          <span>{{ $sindico->nome }}</span>
+          <span>{{ $sindico->turno }}</span>
+
+          <form action="/admin/condominios/delete-sindico/{{ $sindico->id }}" method="POST">
+            @csrf
+            @method('delete')
+            <button>excluir</button>
+          </form>
+
+          <form action="">
+            <button>edit</button>
+          </form>
+        </div>
+      @endforeach
+    </div>
+  </div>
+
+
 
 </x-layout>
 

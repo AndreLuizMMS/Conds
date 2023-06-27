@@ -18,7 +18,7 @@ class AuthController extends Controller {
 
         $newUser = User::create($incomingFileds);
         Auth::login($newUser);
-        
+
         if (auth()->user()->isAdmin) {
             return redirect('/admin/home');
         }
@@ -41,7 +41,6 @@ class AuthController extends Controller {
                 return redirect('/sindico/home');
             }
             Auth::logout();
-            return redirect('/')->with('msg', 'Somente síndicos e administradores pode acessar');
         }
     }
 

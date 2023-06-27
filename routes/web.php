@@ -38,6 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function () {
 
         Route::prefix('condominios')->group(function () {
             Route::get('/', 'listCondominios')->name('listCondominios');
+            Route::post('/', 'listSindicos')->name('listCondominios');
 
             Route::post('/add', 'addCondominio');
             Route::delete('/delete/{id}', 'deleteCondominio');
@@ -45,6 +46,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function () {
             Route::get('/edit-name/{id}/', 'editNomeCondominio');
 
             Route::post('/add-sindico/{id}/', 'addSindico');
+            Route::delete('/delete-sindico/{id}/', 'deleteSindico');
         });
     });
 });

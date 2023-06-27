@@ -3,6 +3,10 @@
     color: rgb(204, 43, 43);
 }
 
+// * {
+//     border: 1px solid black;
+// }
+
 body {
     margin-top: 5rem;
     display: flex;
@@ -225,6 +229,41 @@ label {
     }
 }
 
-.add-sindico {
-    margin-top: 2rem;
+.sindicos-at {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-header {
+    display: flex;
+    align-items: start;
+    justify-content: flex-start;
+    width: 100%;
+    font-weight: bold;
+    margin-bottom: 10px;
+    gap: 2rem;
+
+    span {
+        text-align: center;
+        font-size: 1.4rem;
+    }
+}
+
+.sindicos-info {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
+
+    .info {
+        display: flex;
+        justify-content: space-between;
+        gap: 2.2rem;
+    }
+
+    span {
+        text-align: center;
+        font-size: 1.2rem;
+    }
 }

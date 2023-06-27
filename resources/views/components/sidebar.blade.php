@@ -1,6 +1,6 @@
 <div class="sidebar-container">
 
-  <a href="" class="profile-a">
+  <a href="/admin/home" class="profile-a">
     <div class="profile-container">
       <img src="{{ asset('/images/no-profile.avif') }}" alt="" class="avatar">
       <span class="nome">

@@ -1,5 +1,7 @@
-@props(['conds'])
+@props(['conds', 'user'])
+<x-sidebar :user="$user" />
 <x-layout>
+  <br>
   <a href="/admin/home">
     back
   </a>
@@ -19,13 +21,10 @@
       </form>
     </div>
 
-    <h1>Condominios</h1>
+    <h1>Condomínios</h1>
     @foreach ($conds as $cond)
       <x-condominios-list :cond="$cond" />
     @endforeach
-
-
-    
 
   </div>
 
