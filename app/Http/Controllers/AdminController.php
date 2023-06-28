@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Apartamento;
 use App\Models\cond_sindico;
 use App\Models\Condominio;
+use App\Models\Condxmino;
+use App\Models\Morador;
 use App\Models\morador_apartamento;
 use App\Models\Sindico;
+use Database\Seeders\Condominios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller {
 
@@ -24,6 +28,20 @@ class AdminController extends Controller {
     function listSindicos() {
         $sindicos = Sindico::all();
         return view('Admin.sindicos', ['sindicos' => $sindicos, 'user' => auth()->user()]);
+    }
+
+    function listMoradores() {
+
+        $moradores = Condxmino::select('condxminos.nome', 'morador.apartamento', 'apartamento.condominio', 'condominios.nome as nomeCondominio', 'morador.condx_id as idMorador')
+            ->from('condxminos')
+            ->join('morador', 'morador.condx_id', '=', 'condxminos.id')
+            ->join('apartamento', 'morador.apartamento', '=', 'num_ap')
+            ->join('condominios', 'apartamento.condominio', '=', 'condominios.id')
+            ->get();
+
+        // dd($moradores);
+
+        return view('Admin.moradores', ['user' => auth()->user(), 'moradores' => $moradores]);
     }
 
     // condominio CRUD
@@ -51,12 +69,14 @@ class AdminController extends Controller {
 
     function editCondominio($id) {
         $cond = Condominio::find($id);
+
         $sindicos = Sindico::select('sindicos.nome', 'cond_sindico.turno', 'sindicos.id')
             ->from('sindicos')
             ->join('cond_sindico', 'cond_sindico.id_sindico', '=', 'sindicos.id')
             ->where('cond_sindico.id_condominio', $id)
             ->get();
-        $apartamentos = Apartamento::select('num_ap', 'condominio', 'id_morador', 'id_proprietario')
+
+        $apartamentos = Apartamento::select('num_ap', 'condominio', 'id_proprietario')
             ->from('apartamento')
             ->where('condominio', $id)
             ->get();
@@ -195,8 +215,59 @@ class AdminController extends Controller {
     }
 
     function editApartamento($idCondominio, $num_ap) {
-        $moradores = morador_apartamento::select('id_morador');
+        $moradores = Morador::select('condxminos.nome', 'morador.apartamento')
+            ->join('condxminos', 'morador.condx_id', '=', 'condxminos.id')
+            ->where('morador.apartamento', $num_ap)
+            ->get();
 
-        return view('Admin.edit-apartamento', ['user' => auth()->user(),]);
+        // dd($moradores);
+
+        return view(
+            'Admin.edit-apartamento',
+            [
+                'user' => auth()->user(),
+                'moradores' => $moradores,
+                'num_ap' => $num_ap,
+                'idCondominio' => $idCondominio
+            ]
+        );
+    }
+
+    function deleteMorador($condx_id, $numAp) {
+        $deletedMorador = Morador::where('condx_id', $condx_id)
+            ->where('apartamento', $numAp)
+            ->delete();
+
+        return back();
+    }
+
+    function addMorador(Request $req, $idCondominio, $num_ap) {
+        $form = $req->validate([
+            'addMorador' => 'required'
+        ]);
+        $form['addMorador'] = trim($form['addMorador']);
+
+        $moradorExiste = Condxmino::where('nome', $form['addMorador'])->exists();
+        if (!$moradorExiste) {
+            $newMorador = Condxmino::create([
+                'nome' => $form['addMorador']
+            ]);
+
+            Morador::create([
+                'condx_id' => $newMorador->id,
+                'apartamento' => $num_ap,
+                'condominio' => $idCondominio
+            ]);
+        }
+
+        return back();
+    }
+
+    function deleteCondxminoMorador($idMorador) {
+        $deletedCondxMorador = Condxmino::find($idMorador);
+        Morador::where('condx_id', $deletedCondxMorador->id)->delete();
+        $deletedCondxMorador->delete();
+
+        return back();
     }
 }

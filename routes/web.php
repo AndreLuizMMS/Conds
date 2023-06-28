@@ -50,6 +50,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function () {
 
             Route::get('/apartamento', '');
             Route::get('/edit/{idCondominio}/ap/{numAp}', 'editApartamento');
+            Route::delete('/edit/{idCondominio}/ap/{numAp}/morador/{condx_id}', 'deleteMorador');
+            Route::post('edit/{idCondominio}/ap/{num_ap}/add-morador', 'addMorador');
         });
 
         Route::prefix('sindicos')->group(function () {
@@ -58,6 +60,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function () {
             Route::get('/edit/{idSindico}', 'editSindico');
             Route::post('/nome-sindico/{idSindico}', 'editNomeSindico');
             Route::delete('/delete/{idSindico}', 'deleteSindico');
+        });
+
+        Route::prefix('moradores')->group(function(){
+            Route::get('/', 'listMoradores');
+            Route::get('/delete/{idMorador}', 'deleteCondxminoMorador');
         });
     });
 });

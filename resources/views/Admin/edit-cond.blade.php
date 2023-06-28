@@ -7,9 +7,6 @@
 
   <h1>{{ $cond->nome }}</h1>
   <button id="changeNameBtn">mudar nome</button>
-
-  <br>
-  <br>
   <br>
 
   <div id="editNameForm" style="display: none;">
@@ -22,6 +19,7 @@
     </form>
   </div>
 
+  <br>
   <form action="/admin/condominios/add-sindico/{{ $cond->id }}/" class="add-sindico" method="POST">
     @csrf
     <label for="nome">Adicionar Sindico</label>
@@ -58,10 +56,6 @@
             @method('delete')
             <button>excluir</button>
           </form>
-
-          <form action="">
-            <button>edit</button>
-          </form>
         </div>
       @endforeach
     </div>
@@ -71,10 +65,12 @@
     <h1>Apartamentos</h1>
     <div class="aps-info">
       @foreach ($apartamentos as $ap)
-        <p>{{ $ap->num_ap }}</p>
-        <a href="/admin/condominios/edit/{{ $cond->id }}/ap/{{ $ap->num_ap }}">
-          <button>Ver mais</button>
-        </a>
+        <div>
+          <p>{{ $ap->num_ap }}</p>
+          <a href="/admin/condominios/edit/{{ $cond->id }}/ap/{{ $ap->num_ap }}">
+            <button>Ver mais</button>
+          </a>
+        </div>
       @endforeach
     </div>
   </div>
@@ -82,7 +78,7 @@
 </x-layout>
 
 <script>
-  document.getElementById('changeNameBtn').addEventListener('click', function() {
+  document.getElementById('changeNameBtn').addEventListener('click', () => {
     document.getElementById('editNameForm').style.display = 'block';
   });
 </script>

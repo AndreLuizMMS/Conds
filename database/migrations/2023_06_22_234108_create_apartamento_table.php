@@ -12,16 +12,11 @@ return new class extends Migration {
         Schema::create('apartamento', function (Blueprint $table) {
             $table->integer('num_ap')->primary();
             $table->unsignedInteger('condominio');
-            $table->unsignedInteger('id_morador')->nullable();
             $table->unsignedInteger('id_proprietario')->nullable();
             $table->timestamps();
 
 
             $table->foreign('condominio')->references('id')->on('condominios');
-
-            // is set on create_set_keys
-            // $table->foreign('id_morador')->references('id_morador')->on('morador_apartamento');
-            // $table->foreign('id_proprietario')->references('id_prop')->on('prop_apartamento');
         });
     }
 

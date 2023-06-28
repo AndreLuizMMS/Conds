@@ -16,5 +16,8 @@
     <a href="/admin/sindicos">
       Síndicos
     </a>
+    <a href="/admin/moradores">
+      Moradores
+    </a>
   </div>
 </div>
