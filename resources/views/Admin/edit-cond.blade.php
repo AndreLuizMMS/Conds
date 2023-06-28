@@ -67,7 +67,17 @@
     </div>
   </div>
 
-
+  <div class="aps">
+    <h1>Apartamentos</h1>
+    <div class="aps-info">
+      @foreach ($apartamentos as $ap)
+        <p>{{ $ap->num_ap }}</p>
+        <a href="/admin/condominios/edit/{{ $cond->id }}/ap/{{ $ap->num_ap }}">
+          <button>Ver mais</button>
+        </a>
+      @endforeach
+    </div>
+  </div>
 
 </x-layout>
 

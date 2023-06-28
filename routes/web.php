@@ -47,6 +47,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function () {
 
             Route::post('/add-sindico/{id}/', 'addSindico');
             Route::delete('/delete-sindico/{id}/', 'deleteSindicoAtivo');
+
+            Route::get('/apartamento', '');
+            Route::get('/edit/{idCondominio}/ap/{numAp}', 'editApartamento');
         });
 
         Route::prefix('sindicos')->group(function () {

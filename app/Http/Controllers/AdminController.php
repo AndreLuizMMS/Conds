@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Apartamento;
 use App\Models\cond_sindico;
 use App\Models\Condominio;
+use App\Models\morador_apartamento;
 use App\Models\Sindico;
 use Illuminate\Http\Request;
 
@@ -54,10 +56,14 @@ class AdminController extends Controller {
             ->join('cond_sindico', 'cond_sindico.id_sindico', '=', 'sindicos.id')
             ->where('cond_sindico.id_condominio', $id)
             ->get();
+        $apartamentos = Apartamento::select('num_ap', 'condominio', 'id_morador', 'id_proprietario')
+            ->from('apartamento')
+            ->where('condominio', $id)
+            ->get();
 
         return view(
             'Admin.edit-cond',
-            ['cond' => $cond, 'user' => auth()->user(), 'sindicos' => $sindicos]
+            ['cond' => $cond, 'user' => auth()->user(), 'sindicos' => $sindicos, 'apartamentos' => $apartamentos]
         );
     }
 
@@ -186,5 +192,11 @@ class AdminController extends Controller {
         }
 
         return back();
+    }
+
+    function editApartamento($idCondominio, $num_ap) {
+        $moradores = morador_apartamento::select('id_morador');
+
+        return view('Admin.edit-apartamento', ['user' => auth()->user(),]);
     }
 }

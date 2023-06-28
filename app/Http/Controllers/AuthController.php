@@ -41,7 +41,9 @@ class AuthController extends Controller {
                 return redirect('/sindico/home');
             }
             Auth::logout();
+            return back();
         }
+        return back();
     }
 
     function logout() {

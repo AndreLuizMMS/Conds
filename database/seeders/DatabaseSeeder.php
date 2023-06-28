@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Apartamento;
 use App\Models\cond_sindico;
 use App\Models\Condominio;
 use App\Models\Sindico;
@@ -34,6 +35,10 @@ class DatabaseSeeder extends Seeder {
             'id_sindico' => $sind->id,
             'id_condominio' => $cond->id,
             'turno' => 'mat'
+        ]);
+        Apartamento::create([
+            'num_ap' => 1504,
+            'condominio' => $cond->id
         ]);
     }
 }
