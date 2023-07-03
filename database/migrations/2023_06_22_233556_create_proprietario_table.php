@@ -11,7 +11,8 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('proprietario', function (Blueprint $table) {
             $table->unsignedInteger('condx_id');
-            $table->integer('apartamento');
+            $table->unsignedInteger('apartamento_id');
+            $table->unsignedInteger('condominio');
             $table->timestamps();
 
             $table->foreign('condx_id')->references('id')->on('condxminos');

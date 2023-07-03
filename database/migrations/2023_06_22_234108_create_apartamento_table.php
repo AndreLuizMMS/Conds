@@ -10,9 +10,9 @@ return new class extends Migration {
      */
     public function up(): void {
         Schema::create('apartamento', function (Blueprint $table) {
-            $table->integer('num_ap')->primary();
+            $table->increments('id')->unique();
+            $table->integer('num_ap');
             $table->unsignedInteger('condominio');
-            $table->unsignedInteger('id_proprietario')->nullable();
             $table->timestamps();
 
 

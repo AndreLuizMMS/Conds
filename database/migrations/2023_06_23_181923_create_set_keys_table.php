@@ -10,14 +10,12 @@ return new class extends Migration {
      */
     public function up(): void {
         Schema::table('morador', function (Blueprint $table) {
-            $table->foreign('apartamento')->references('num_ap')->on('apartamento');
+            $table->foreign('apartamento_id')->references('id')->on('apartamento');
         });
+
         Schema::table('proprietario', function (Blueprint $table) {
-            $table->foreign('apartamento')->references('num_ap')->on('apartamento');
-        });
-        Schema::table('apartamento', function (Blueprint $table) {
-            // is set on create_set_keys
-            $table->foreign('id_proprietario')->references('condx_id')->on('proprietario');
+            $table->foreign('apartamento_id')->references('id')->on('apartamento');
+            $table->foreign('condominio')->references('condominio')->on('apartamento');
         });
     }
 

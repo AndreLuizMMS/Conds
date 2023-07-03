@@ -67,7 +67,7 @@
       @foreach ($apartamentos as $ap)
         <div>
           <p>{{ $ap->num_ap }}</p>
-          <a href="/admin/condominios/edit/{{ $cond->id }}/ap/{{ $ap->num_ap }}">
+          <a href="/admin/condominios/edit/{{ $cond->id }}/ap/{{ $ap->num_ap }}/id/{{ $ap->id }}">
             <button>Ver mais</button>
           </a>
         </div>

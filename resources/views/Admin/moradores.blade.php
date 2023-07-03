@@ -12,9 +12,9 @@
     <div class="moradores-info">
       @foreach ($moradores as $morador)
         <div class="info">
-          <p> {{ $morador->nome }} </p>
-          <p>{{ $morador->apartamento }}</p>
-          <p>{{ $morador->nomeCondominio }}</p>
+          <p> {{ $morador->nomeMorador }} </p>
+          <p>{{ $morador->num_ap }}</p>
+          <p>{{ $morador->nomeCond }}</p>
           <form action="/admin/moradores/delete/{{ $morador->idMorador }}">
             <button>excluir</button>
           </form>

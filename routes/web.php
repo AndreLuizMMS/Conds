@@ -32,7 +32,6 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function () {
-
     Route::controller(AdminController::class)->group(function () {
         Route::get('/home', 'home');
 
@@ -49,9 +48,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function () {
             Route::delete('/delete-sindico/{id}/', 'deleteSindicoAtivo');
 
             Route::get('/apartamento', '');
-            Route::get('/edit/{idCondominio}/ap/{numAp}', 'editApartamento');
+            Route::get('/edit/{idCondominio}/ap/{idApartamento}/id/{numAp}', 'editApartamento');
             Route::delete('/edit/{idCondominio}/ap/{numAp}/morador/{condx_id}', 'deleteMorador');
-            Route::post('edit/{idCondominio}/ap/{num_ap}/add-morador', 'addMorador');
+            Route::post('edit/{idCondominio}/ap/{num_ap}/id/{idApartamento}/add-morador', 'addMorador');
         });
 
         Route::prefix('sindicos')->group(function () {
@@ -62,9 +61,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function () {
             Route::delete('/delete/{idSindico}', 'deleteSindico');
         });
 
-        Route::prefix('moradores')->group(function(){
+        Route::prefix('moradores')->group(function () {
             Route::get('/', 'listMoradores');
             Route::get('/delete/{idMorador}', 'deleteCondxminoMorador');
+        });
+
+        Route::prefix('proprietarios')->group(function () {
+            Route::get('/', 'listProprieatrios');
+
+            Route::post(
+                'condominio/{idCondominio}/ap/{num_ap}/id/{idApartamento}/prop-def',
+                'defineProprietario'
+            );
+            Route::get('/{idProp}/cond/{idCond}/ap/{num_ap}', 'deleteProprietario');
         });
     });
 });

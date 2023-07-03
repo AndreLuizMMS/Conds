@@ -1,4 +1,4 @@
-@props(['num_ap', 'idCondominio', 'user', 'moradores'])
+@props(['num_ap', 'idCondominio', 'user', 'moradores', 'proprietario'])
 <x-layout>
   <x-sidebar :user="$user" />
 
@@ -7,11 +7,30 @@
   <h1>Apartamento {{ $num_ap }}</h1>
   <h3>condominio {{ $idCondominio }}</h3>
 
+  <h1>Proprietário</h1>
+  @if ($proprietario)
+    <span> {{ $proprietario->nome }} </span>
+  @else 
+    <span> Sem proprietário </span>
+    <br>
+    <form
+      action="/admin/proprietarios/condominio/{{ $idCondominio }}/ap/{{ $num_ap }}/id/{{ $idApartamento }}/prop-def"
+      class="prop-def" method="POST">
+      @csrf
+      <label for="novoProprietario">Definir Proprietário</label>
+      <input type="text" name="novoProprietario">
+      @error('novoProprietario')
+        <x-error-msg :message="$message" />
+      @enderror
+      <button>Salvar</button>
+    </form>
+  @endif
 
   <br>
   <h2>Adicionar novo morador</h2>
   <div class="add-morador">
-    <form action="/admin/condominios/edit/{{ $idCondominio }}/ap/{{ $num_ap }}/add-morador" method="POST">
+    <form action="/admin/condominios/edit/{{ $idCondominio }}/ap/{{ $num_ap }}/id/{{ $idApartamento }}/add-morador"
+      method="POST">
       @csrf
       <input type="text" name="addMorador">
       <button>Adicionar</button>

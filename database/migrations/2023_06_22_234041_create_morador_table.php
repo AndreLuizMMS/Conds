@@ -11,13 +11,13 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('morador', function (Blueprint $table) {
             $table->unsignedInteger('condx_id');
-            $table->integer('apartamento');
-            $table->unsignedInteger('condominio');
+            $table->unsignedInteger('apartamento_id');
+            $table->integer('condominio');
             $table->timestamps();
 
 
             $table->foreign('condx_id')->references('id')->on('condxminos');
-            $table->foreign('condominio')->references('id')->on('condominios');
+            // $table->foreign('condominio')->references('id')->on('condominios');
 
             // is set on create_set_keys
             // $table->foreign('apartamento')->references('id_apart')->on('morador_apartamento');

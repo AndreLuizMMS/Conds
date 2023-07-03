@@ -19,5 +19,8 @@
     <a href="/admin/moradores">
       Moradores
     </a>
+    <a href="/admin/proprietarios">
+      Proprietarios
+    </a>
   </div>
 </div>

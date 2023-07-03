@@ -8,10 +8,10 @@ use App\Models\Apartamento;
 use App\Models\cond_sindico;
 use App\Models\Condominio;
 use App\Models\Condxmino;
-use App\Models\Morador;
-use App\Models\morador_apartamento;
+use App\Models\Proprietario;
 use App\Models\Sindico;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder {
     /**
@@ -29,6 +29,12 @@ class DatabaseSeeder extends Seeder {
         $cond = Condominio::create([
             'nome' => 'San Regis'
         ]);
+        for ($i = 0; $i < 10; $i++) {
+            Apartamento::create([
+                'num_ap' => $i + 100,
+                'condominio' => $cond->id
+            ]);
+        }
         $sind = Sindico::create([
             'nome' => 'André'
         ]);
@@ -39,36 +45,44 @@ class DatabaseSeeder extends Seeder {
         ]);
 
 
-
-        $condxMorador = Condxmino::create([
+        $condx = Condxmino::create([
             'nome' => 'André Luiz'
         ]);
-        $condxMorador2 = Condxmino::create([
-            'nome' => 'Deds'
+
+        $cond2 = Condominio::create([
+            'nome' => 'Metropolitan'
         ]);
-
-        // $ap = Apartamento::create([
-        //     'num_ap' => 1504,
-        //     'condominio' => $cond->id,
-        // ]);
-
-        // 10x for loop
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Apartamento::create([
-                'num_ap' => $i,
-                'condominio' => $cond->id,
+                'num_ap' => $i + 100,
+                'condominio' => $cond2->id
             ]);
         }
 
-        // Morador::create([
-        //     'condx_id' => $condxMorador->id,
-        //     'apartamento' => $ap->num_ap,
-        //     'condominio' => $cond->id
-        // ]);
-        // Morador::create([
-        //     'condx_id' => $condxMorador2->id,
-        //     'apartamento' => $ap->num_ap,
-        //     'condominio' => $cond->id
+        $cond3 = Condominio::create([
+            'nome' => 'BrookFiled'
+        ]);
+        for ($i = 0; $i < 10; $i++) {
+            Apartamento::create([
+                'num_ap' => $i + 100,
+                'condominio' => $cond3->id
+            ]);
+        }
+
+        $cond4 = Condominio::create([
+            'nome' => 'Praia Grande'
+        ]);
+        for ($i = 0; $i < 10; $i++) {
+            Apartamento::create([
+                'num_ap' => $i + 100,
+                'condominio' => $cond4->id
+            ]);
+        }
+
+        // Proprietario::create([
+        //     'condx_id' => 1,
+        //     'apartamento' => 6,
+        //     'condominio' => 1
         // ]);
     }
 }
