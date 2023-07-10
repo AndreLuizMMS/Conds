@@ -8,22 +8,28 @@ use App\Models\Apartamento;
 use App\Models\cond_sindico;
 use App\Models\Condominio;
 use App\Models\Condxmino;
-use App\Models\Proprietario;
 use App\Models\Sindico;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder {
     /**
      * Seed the application's database.
      */
     public function run(): void {
-        // \App\Models\User::factory(10)->create();
 
         \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'andreluiz.dev19@gmail.com',
-            'password' => bcrypt('asdasd')
+            'name' => 'André',
+            'email' => 'sindico@test.com',
+            'password' => bcrypt('asdasd'),
+            'isAdmin' => 0,
+            'isSindico' => 1
+        ]);
+        \App\Models\User::factory()->create([
+            'name' => 'admin User',
+            'email' => 'admin@test.com',
+            'password' => bcrypt('asdasd'),
+            'isAdmin' => 1,
+            'isSindico' => 0
         ]);
 
         $cond = Condominio::create([
@@ -78,11 +84,5 @@ class DatabaseSeeder extends Seeder {
                 'condominio' => $cond4->id
             ]);
         }
-
-        // Proprietario::create([
-        //     'condx_id' => 1,
-        //     'apartamento' => 6,
-        //     'condominio' => 1
-        // ]);
     }
 }

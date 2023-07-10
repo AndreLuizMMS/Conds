@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use GuzzleHttp\Middleware;
+use App\Http\Controllers\SindicoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-
 
 Route::view('/', 'pages.home');
 
@@ -75,5 +73,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function () {
             );
             Route::get('/{idProp}/cond/{idCond}/ap/{num_ap}', 'deleteProprietario');
         });
+    });
+});
+
+Route::group(['prefix' => 'sindico', 'middleware' => 'isSindico'], function () {
+    Route::controller(SindicoController::class)->group(function () {
+        Route::get('/home', 'home');
+
+        Route::get('/condominio', 'listCondominio');
+        Route::get('/condominio/{id}', 'infoCondominio');
+
+        Route::get('/turnos', 'listTurnos');
+
+        Route::get('/condominio/{idConominio}/ap/{idApartamento}/{numAp}', 'listApartamento');
     });
 });

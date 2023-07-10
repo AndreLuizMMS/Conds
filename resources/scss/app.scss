@@ -381,3 +381,37 @@ label {
         }
     }
 }
+
+.conds-sindico {
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+
+    div {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.turnos {
+    display: flex;
+
+    .turno-header {
+        display: flex;
+        gap: 3rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    .turno-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        div {
+            display: flex;
+            gap: 3rem;
+            justify-content: space-between;
+        }
+    }
+}

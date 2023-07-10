@@ -121,8 +121,8 @@ class AdminController extends Controller {
             ->join('cond_sindico', 'cond_sindico.id_sindico', '=', 'sindicos.id')
             ->get();
 
-        $currentSindico = Sindico::where('nome', $form['nome'])->exists();
-        if (!$currentSindico) {
+        $currentSindico = Sindico::where('nome', $form['nome']);
+        if (!$currentSindico->exists()) {
             foreach ($sindicos as $sindico) {
                 if ($form['nome'] == $sindico->nome && $form['turno'] == $sindico->turno) {
                     return back()->withErrors(['nome' => 'Sindico ativo']);
@@ -146,6 +146,7 @@ class AdminController extends Controller {
                 'turno' => $form['turno']
             ]);
         } else {
+            $currentSindico = $currentSindico->get();
             cond_sindico::create([
                 'id_sindico' => $currentSindico[0]->id,
                 'id_condominio' => $id,
