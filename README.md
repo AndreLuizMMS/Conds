@@ -20,7 +20,8 @@ Siga as etapas abaixo para configurar o projeto em seu ambiente local:
 - Crie um arquivo de ambiente `.env` na raiz do projeto e configure as informações do banco de dados.
 - Execute o comando `php artisan key:generate` para gerar a chave da aplicação.
 - Execute o comando `php artisan migrate --seed` para criar as tabelas no banco de dados.
-- Execute o comando `npm run dev` para iniciar o o CSS e o servidor de desenvolvimento.
+- Execute o comando `npm run dev` para compoilar o CSS.
+- Em outra janela do terminal execute o comando `php artisan serve` para iniciar o servidor de desenvolvimento. 
 - Agora você pode acessar o projeto através do seu navegador em http://localhost:8000.
 
 # Acesso 
